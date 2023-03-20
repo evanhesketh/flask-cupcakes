@@ -70,3 +70,45 @@ def create_cupcake():
     serialized = cupcake.serialize()
 
     return (jsonify(cupcake=serialized), 201)
+
+@app.patch('/api/cupcakes/<int:id>')
+def update_cupcake(id):
+    """
+    Update cupcake
+
+    Return JSON:
+    {cupcake: {id, flavor, size, rating, image}}
+
+    """
+
+    cupcake = Cupcake.query.get_or_404(id)
+
+    jsonDictionary = request.json
+
+    for key in jsonDictionary:
+        setattr(cupcake, key, jsonDictionary[key])
+
+    db.session.commit()
+
+    serialized = cupcake.serialize()
+
+    return jsonify(cupcake=serialized)
+
+@app.delete('/api/cupcakes/<int:id>')
+def delete_cupcake(id):
+    """
+    Delete cupcake
+
+    Return JSON:
+    {deleted: [cupcake-id]}
+
+    """
+    cupcake = Cupcake.query.get_or_404(id)
+
+    db.session.delete(cupcake)
+
+    db.session.commit()
+
+    return jsonify(deleted=[id])
+
+
