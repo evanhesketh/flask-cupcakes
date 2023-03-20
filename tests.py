@@ -129,3 +129,18 @@ class CupcakeViewsTestCase(TestCase):
                 }
             })
 
+            #TODO: add count of cupcakes for consistency
+
+    def test_delete_cupcake(self):
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake_id}"
+            resp = client.delete(url)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.json, {"deleted": [self.cupcake_id]})
+            self.assertEqual(Cupcake.query
+                             .filter(Cupcake.id == self.cupcake_id).count(), 0)
+
+
+
+
