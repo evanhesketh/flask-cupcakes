@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cupcake API</title>
+</head>
+<body>
+  <h1>The Cupcake API</h1>
+  <h2>List of Cupcakes</h2>
+  <ul id="list-of-cupcakes"></ul>
+
+  <form id="new-cupcake-form">
+    <div>
+      <label for="flavor">Flavor:</label>
+      <input type="text" id="flavor" name="flavor">
+    </div>
+    <div>
+      <label for="size">Size:</label>
+      <input type="text" id="size" name="size">
+    </div>
+    <div>
+      <label for="rating">Rating:</label>
+      <input type="text" id="rating" name="rating">
+    </div>
+    <div>
+      <label for="image">Image:</label>
+      <input type="text" id="image" name="image">
+    </div>
+    <div>
+      <input type="submit">
+    </div>
+  </form>
+  <script src="http://unpkg.com/jquery"></script>
+  <script src="http://unpkg.com/axios/dist/axios.js"></script>
+  <script src="/static/app.js"></script>
+
+</body>
+</html>

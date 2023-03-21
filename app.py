@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import connect_db, Cupcake, db
@@ -18,6 +18,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URL", "postgresql:///cupcakes")
 
 connect_db(app)
+
+@app.get('/')
+def index():
+    """Display homepage."""
+
+    return render_template('index.html')
 
 @app.get('/api/cupcakes')
 def get_all_cupcakes_data():
@@ -60,7 +66,7 @@ def create_cupcake():
     flavor = request.json['flavor']
     size = request.json['size']
     rating = request.json['rating']
-    image = request.json.get('image')
+    image = request.json['image'] if request.json['image'] else None
 
     cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
 
@@ -82,11 +88,12 @@ def update_cupcake(id):
     """
 
     cupcake = Cupcake.query.get_or_404(id)
+    data = request.json
 
-    jsonDictionary = request.json
-
-    for key in jsonDictionary:
-        setattr(cupcake, key, jsonDictionary[key])
+    cupcake.flavor = data.get('flavor') if data.get('flavor') else cupcake.flavor
+    cupcake.size = data.get('size') if data.get('size') else cupcake.size
+    cupcake.rating = data.get('rating') if data.get('rating') else cupcake.rating
+    cupcake.image = data.get('image') if data.get('image') else cupcake.image
 
     db.session.commit()
 
