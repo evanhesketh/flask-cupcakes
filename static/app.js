@@ -26,3 +26,16 @@ async function handleFormSubmit(evt) {
   // make axios GET request --> get back reponse containing all cupcakes
   //use jquery to add to html
 
+async function displayAllCupcakes() {
+
+  const response =  await axios.get('/api/cupcakes');
+  const allCupcakes = response.data.cupcakes;
+
+  for (const cupcake of allCupcakes){
+    $('#list-of-cupcakes').append(`<li>${cupcake.flavor}, ${cupcake.size}, ${cupcake.rating}, <img src='${cupcake.image}'></li>`)
+  }
+
+}
+
+displayAllCupcakes();
+
